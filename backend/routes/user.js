@@ -91,7 +91,7 @@ router.post("/signin",async (req,res)=>{
         token:token
     })
 })
-router.put("/update",authMiddleware,async (req,res)=>{
+router.put("/",authMiddleware,async (req,res)=>{
     const body=req.body;
     const result=updateBody.safeParse(body);
     if(!result.success){
@@ -104,5 +104,32 @@ router.put("/update",authMiddleware,async (req,res)=>{
         message:"Update successfully"
     })
 
+})
+
+router.get("/bulk",authMiddleware,async (req,res)=>{
+    //Query Parameter: ?filter=harkirat
+    const filter=req.query.filter || "";
+    const users=await User.find({
+        $or:[{
+            firstName:{
+                "$regex":filter,
+                "$options":"i"//case insensitive search
+            }
+        },{
+            lastName:{
+                "$regex":filter,
+                "$options":"i"
+            }
+        }]
+    })
+
+    res.json({
+        user:users.map(user=>({
+            username:user.username,
+            firstName:user.firstName,
+            lastName:user.lastName,
+            _id:user._id
+        }))
+    })
 })
 module.exports=router
