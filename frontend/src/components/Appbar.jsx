@@ -5,7 +5,7 @@ export const Appbar = () => {
     const [name, setName] = useState("")
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/user/me", {
+        axios.get("https://paytmclone-backend.onrender.com/api/v1/user/me", {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token")
             }

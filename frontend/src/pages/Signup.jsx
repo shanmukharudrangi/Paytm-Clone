@@ -30,7 +30,7 @@ export const Signup = () => {
                 <InputBox onChange={e => setPassword(e.target.value)} placeholder="Min 6 characters" label={"Password"} />
                 <div className="pt-4">
                     <Button onClick={async () => {
-                        const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                        const response = await axios.post("https://paytmclone-backend.onrender.com/api/v1/user/signup", {
                             username, firstName, lastName, password
                         });
                         localStorage.setItem("token", response.data.token)
