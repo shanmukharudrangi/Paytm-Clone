@@ -52,7 +52,7 @@ router.post("/signup",async (req,res)=>{
         lastName:body.lastName
     })
     
-    const userId=user._id;
+    const userId=dbuser._id;
 
     ///----create new account---
 
