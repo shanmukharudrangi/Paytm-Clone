@@ -115,7 +115,14 @@ router.put("/",authMiddleware,async (req,res)=>{
     })
 
 })
-
+router.get("/me", authMiddleware, async (req, res) => {
+    const user = await User.findById(req.userId)
+    res.json({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username
+    })
+})
 router.get("/bulk",authMiddleware,async (req,res)=>{
     //Query Parameter: ?filter=harkirat
     const filter=req.query.filter || "";
