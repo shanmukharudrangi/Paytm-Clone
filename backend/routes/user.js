@@ -4,7 +4,7 @@ const zod=require("zod");
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcrypt");
 const {authMiddleware}=require("../middleware");
-const {User}=require("../db");
+const {User, Account}=require("../db");
 require("dotenv").config() 
 const JWT_SECRET=process.env.JWT_SECRET
 const signupSchema=zod.object({
@@ -51,6 +51,16 @@ router.post("/signup",async (req,res)=>{
         firstName:body.firstName,
         lastName:body.lastName
     })
+    
+    const userId=user._id;
+
+    ///----create new account---
+
+    await Account.create({
+        userId,
+        balance:1+Math.random()*10000
+    })
+    
     const token = jwt.sign({ userId:dbuser._id }, JWT_SECRET) 
 
     res.json({
