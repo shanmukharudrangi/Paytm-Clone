@@ -12,25 +12,29 @@ export const Signin = () => {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
-    return <div className="bg-slate-300 h-screen flex justify-center">
-        <div className="flex flex-col justify-center">
-            <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
-                <Heading label={"Sign in"} />
-                <SubHeading label={"Enter your credentials to access your account"} />
-                <InputBox onChange={e => setUsername(e.target.value)} placeholder="harkirat@gmail.com" label={"Email"} />
-                <InputBox onChange={e => setPassword(e.target.value)} placeholder="123456" label={"Password"} />
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center">
+            <div className="bg-white rounded-2xl shadow-2xl w-96 p-8">
+                <div className="flex justify-center mb-4">
+                    <div className="bg-indigo-600 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold">
+                        P
+                    </div>
+                </div>
+                <Heading label={"Welcome Back"} />
+                <SubHeading label={"Sign in to your PayTM account"} />
+                <InputBox onChange={e => setUsername(e.target.value)} placeholder="john@gmail.com" label={"Email"} />
+                <InputBox onChange={e => setPassword(e.target.value)} placeholder="Enter your password" label={"Password"} />
                 <div className="pt-4">
                     <Button onClick={async () => {
                         const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
-                            username,
-                            password
+                            username, password
                         })
                         localStorage.setItem("token", response.data.token)
                         navigate("/dashboard")
-                    }} label={"Sign in"} />
+                    }} label={"Sign In"} />
                 </div>
                 <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
             </div>
         </div>
-    </div>
+    )
 }
